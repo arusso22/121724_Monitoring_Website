@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonicotinoid Monitoring Program</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Neonicotinoid Monitoring Program</h1>
+    </header>
+    <main>
+        <h2>Audubon Society Refuges</h2>
+        <img src="{{ url_for('static', filename='Map copy.jpeg') }}"
+             style="display: block; margin: 20px auto; max-width: 80%; height: auto;">
+    </main>
+
+    {% for site_name, data in all_data.items() %}
+    <section>
+        <main>
+        <h2>{{ site_name }}</h2>
+        <form action="{{ url_for('save_comments') }}" method="POST">
+            <input type="hidden" name="site_name" value="{{ site_name }}">
+            <table border="1" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Sample</th>
+                        <th>Conc (ppb)</th>
+                        <th>Comment</th>
+                        <th>Enter Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row.Date }}</td>
+                        <td>{{ row.Sample }}</td>
+                        <td>{{ row.Concentration }}</td>
+                        <td>
+                            {% if row.Comment %}
+                                <ul>
+                                    {% for comment in row.Comment.split('\n') %}
+                                        <li>{{ comment }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                No comments yet.
+                            {% endif %}
+                        </td>
+                        <td>
+                            <input type="text" name="comment_{{ loop.index }}" placeholder="Add comment">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" style="margin-top: 10px;">Save Comments</button>
+        </form>
+            <img src="{{ url_for('static', filename=site_name | replace(' ', '_') ~ '_graph.png') }}"
+                alt="Monitoring data for {{ site_name }}"
+                style="display: block; margin: 30px auto 40px auto; max-width: 80%; height: auto;">
+    </section>
+    </main>
+    {% endfor %}
+    <footer>
+        <p>&copy; 2024 Neonicotinoid Monitoring Program</p>
+    </footer>
+</body>
+</html>
