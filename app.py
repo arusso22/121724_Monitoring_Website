@@ -10,7 +10,7 @@ sites = {
         "data_file": "table1_data.csv",
         "comments_file": "comment_column1.csv"
     },
-    "Queen River": {
+    "Queens River": {
         "data_file": "table2_data.csv",
         "comments_file": "comment_column2.csv"
     }
@@ -91,7 +91,7 @@ sites = {
         "data_file": "table1_data.csv",
         "comments_file": "comment_column1.csv"
     },
-    "Site2": {
+    "Queens River": {
         "data_file": "table2_data.csv",
         "comments_file": "comment_column2.csv"
     }
